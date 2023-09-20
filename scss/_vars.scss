@@ -1,0 +1,302 @@
+@charset "utf-8";
+$base_color: #DDDBD9;
+$sub_color: #7C9C9A;
+$sub_color2: #64b2cb;
+$brown: #4e433b;
+$black: #363636;
+$pale: #f3ebe0;
+$red: #d10c0c;
+$pink: #f394a3;
+$orange: #e4774d;
+$green: #7fcb6e;
+$yellow: #ffe56b;
+$bg_gray: #f6f6f6;
+$bg_blue: #f3f8f9;
+$beige: #fcfae4;
+$gold: #c3a349;
+$body: #fefefe;
+$txt: #4e433b;
+
+$font__ja: 'Zen Old Mincho',
+	"YakuHanMP",
+	"游明朝 Medium",
+	"Yu Mincho",
+	YuMincho,
+	"Hiragino Mincho ProN",
+	HGS明朝E,
+	serif;
+$font__ja2: 'Zen Maru Gothic',
+	"YakuHanJP",
+	"游ゴシック Medium",
+	"游ゴシック体",
+	"Yu Gothic Medium",
+	YuGothic,
+	"ヒラギノ角ゴ ProN",
+	"Hiragino Kaku Gothic ProN",
+	"メイリオ",
+	Meiryo,
+	"ＭＳ Ｐゴシック",
+	"MS PGothic",
+	sans-serif;
+$font__en: 'Indie Flower', cursive;
+$font__en2: 'Alegreya Sans SC', sans-serif;
+
+@mixin eng($weight: 700) {
+	font-family: $font__en;
+	font-weight: $weight;
+	letter-spacing: 0.1em;
+}
+
+@mixin mincho {
+	font-family: $font__ja;
+	font-weight: 600;
+}
+
+@mixin title($weight: 700) {
+	font-family: $font__ja2;
+	font-weight: $weight;
+	letter-spacing: 0.15em;
+}
+
+@mixin number {
+	font-family: $font__en;
+	font-weight: 500;
+	letter-spacing: 0.05em;
+}
+
+@mixin txt-shadow($color: $base_color) {
+	text-shadow: 1px 1px 0px $color, -1px 1px 0px $color, 1px -1px 0px $color, -1px -1px 0px $color, 1px 0px 0px $color,
+		0px 1px 0px $color, -1px 0px 0px $color, 0px -1px 0px $color;
+}
+
+//サイトのベースサイズ
+$base_width: 1200px;
+// width: ($base_width/6);
+
+// 付与するベンダープレフィックス
+$set_prefix: -webkit-,
+	-moz-,
+	-ms-,
+	-o-,
+	"";
+
+@mixin awesome($code, $fa-weight: 900) {
+	font-family: "Font Awesome 5 Free";
+	content: #{'"' + $code + '"'};
+	font-weight: $fa-weight;
+}
+
+$phone: \f879;
+$fax: \f1ac;
+$mail: \f0e0;
+
+@mixin font-size($size, $base: 16) {
+	font-size: $size + px; // fallback for old browsers
+	font-size: ($size / $base) + rem;
+}
+
+@mixin align-height {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-box;
+	display: -webkit-flexbox;
+	display: -moz-flexbox;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: flex;
+	-webkit-box-lines: multiple;
+	-moz-box-lines: multiple;
+	-webkit-flex-wrap: wrap;
+	-moz-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+@mixin vertical-writing {
+	-ms-writing-mode: tb-rl;
+	writing-mode: vertical-rl;
+	-webkit-text-orientation: mixed;
+	text-orientation: mixed;
+	-webkit-font-feature-settings: "pkna";
+	font-feature-settings: "pkna";
+}
+
+@mixin vertical-align {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/* アニメーションベンダープレフィックス込み指定 */
+@mixin keyframes($animation-name) {
+	@keyframes #{$animation-name} {
+		@content;
+	}
+
+	@-moz-keyframes #{$animation-name} {
+		@content;
+	}
+
+	@-webkit-keyframes #{$animation-name} {
+		@content;
+	}
+}
+
+/********************/
+
+
+
+/* アニメーションベンダープレフィックス込み指定 */
+@mixin animation($animation-name) {
+	animation: #{$animation-name};
+	-moz-animation: #{$animation-name};
+	-webkit-animation: #{$animation-name};
+	animation-fill-mode: both;
+	-moz-animation-fill-mode: both;
+	-webkit-animation-fill-mode: both;
+}
+
+@mixin for-size($size) {
+	@if $size==pro {
+		@media all and (max-width: 1100px) {
+			@content;
+		}
+	}
+
+	@else if $size==tablet {
+		@media all and (max-width: 896px) {
+			@content;
+		}
+	}
+
+	@else if $size==phone-only {
+		@media all and (max-width: 639px) {
+			@content;
+		}
+	}
+
+	@else if $size==phone-s {
+		@media all and (max-width: 320px) {
+			@content;
+		}
+	}
+
+	@else if $size==pc-small {
+		@media all and (max-width: 1367px) {
+			@content;
+		}
+	}
+
+	@else if $size==tablet-wide {
+		@media screen and (max-width: 890px) and (orientation: landscape) {
+			@content;
+		}
+	}
+}
+
+@mixin wide_width {
+	max-width: calc(100% - 50px);
+	margin-left: auto;
+	margin-right: auto;
+
+	@include for-size(tablet) {
+		max-width: calc(100% - 15px);
+	}
+}
+
+
+// margin
+// margin-bottom
+@for $i from 1 through 120 {
+	.b-m#{$i} {
+		margin-bottom: #{$i}px;
+	}
+}
+
+// margin-top
+@for $i from 1 through 120 {
+	.t-m#{$i} {
+		margin-top: #{$i}px;
+	}
+}
+
+// margin-right
+@for $i from 1 through 120 {
+	.r-m#{$i} {
+		margin-right: #{$i}px;
+	}
+}
+
+// margin-left
+@for $i from 1 through 120 {
+	.l-m#{$i} {
+		margin-left: #{$i}px;
+	}
+}
+
+.flex {
+	display: flex;
+
+	&.f-wrap {
+		flex-wrap: wrap;
+	}
+
+	&.align-items-center {
+		align-items: center;
+	}
+
+	&.space-between {
+		justify-content: space-between;
+	}
+
+	&.jc-center {
+		justify-content: center;
+
+	}
+}
+
+@function clothoid-gradient ($_dir: 'to bottom', $_color: #000000, $_alpha_from: 1, $_alpha_to: 0) {
+	$diff: $_alpha_from - $_alpha_to;
+
+	@if type-of($_dir)==string {
+		$_dir: unquote($_dir);
+	}
+
+	@return linear-gradient($_dir,
+		rgba($_color, $_alpha_from) 0%,
+		rgba($_color, $_alpha_from - $diff * .7) 50%,
+		rgba($_color, $_alpha_from - $diff * .85) 65%,
+		rgba($_color, $_alpha_from - $diff * .925) 75.5%,
+		rgba($_color, $_alpha_from - $diff * .963) 82.85%,
+		rgba($_color, $_alpha_from - $diff * .981) 88%,
+		rgba($_color, $_alpha_to) 100%);
+}
+
+@mixin clothoid-gradient ($_dir: 'to bottom', $_color: #000000, $_alpha_from: 1, $_alpha_to: 0) {
+	background-image: clothoid-gradient($_dir, $_color, $_alpha_from, $_alpha_to);
+}
+
+// @include clothoid-gradient(to bottom, $base_color);
+
+@function clothoid-mix-gradient ($_dir: 'to bottom', $_color_from: #000000, $_color_to: #ffffff) {
+	@if type-of($_dir)==string {
+		$_dir: unquote($_dir);
+	}
+
+	@return linear-gradient($_dir,
+		mix($_color_to, $_color_from, 0%) 0%,
+		mix($_color_to, $_color_from, 70%) 50%,
+		mix($_color_to, $_color_from, 85%) 65%,
+		mix($_color_to, $_color_from, 92.5%) 75.5%,
+		mix($_color_to, $_color_from, 96.3%) 82.85%,
+		mix($_color_to, $_color_from, 98.1%) 88%,
+		mix($_color_to, $_color_from, 100%) 100%);
+}
+
+@mixin clothoid-mix-gradient ($_dir: 'to bottom', $_color_from: #000000, $_color_to: #ffffff) {
+	background-image: clothoid-mix-gradient($_dir, $_color_from, $_color_to);
+}
+
+// @include clothoid-mix-gradient(to bottom, $base_color, $sub_color);
